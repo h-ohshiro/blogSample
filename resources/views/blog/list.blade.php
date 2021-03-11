@@ -1,5 +1,6 @@
-@extends('layout')
+@extends('../layouts/app')
 @section('title', 'ブログ')
+        @auth
 @section('content')
 <div class="row">
   <div class="col-md-10 col-md-offset-2">
@@ -39,3 +40,7 @@
         }
         </script>
   @endsection
+  @endauth
+  @guest
+  <p style="color:red">管理者用画面です。ログインできていません。</p>
+  @endguest
