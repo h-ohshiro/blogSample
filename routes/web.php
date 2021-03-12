@@ -10,8 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes(['verify' => true]);
+Route::get('/', 'HomeController@index')->middleware('verified');
 // ブログ一覧を表示
-Route::get('/', 'BlogController@showList')->name('blogs');
+Route::get('/', 'BlogController@showList')->name('blogs')->middleware('verified');
 // ブログ登録画面を表示
 Route::get('/blog/create', 'BlogController@showCreate')->name('create');
 // ブログ登録
@@ -28,5 +30,3 @@ Route::post('/blog/delete/{id}', 'BlogController@exeDelete')->name('delete');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes(['verify' => true]);

@@ -1,6 +1,9 @@
 @extends('../layouts/app')
 @section('title', 'ブログ')
-        @auth
+@auth
+@php
+    $title = __('You\'ve verified your email address.');
+@endphp
 @section('content')
 <div class="row">
   <div class="col-md-10 col-md-offset-2">
