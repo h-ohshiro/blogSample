@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <h2>ブログ投稿フォーム</h2>
-        <form method="POST" action="{{ route('create') }}" onSubmit="return checkSubmit()">
+        <form method="POST" action="{{ route('store') }}" onSubmit="return checkSubmit()">
         @csrf
             <div class="form-group">
                 <label for="title">

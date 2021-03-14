@@ -1,10 +1,10 @@
 @extends('layout')
-@section('title', 'ブログ編集')
+@section('title', 'ブログ削除')
 @section('content')
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        <h2>ブログ編集フォーム</h2>
-        <form method="post" action="{{ route('update') }}" onSubmit="return checkSubmit()">
+        <h2>ブログ削除フォーム</h2>
+        <form method="post" action="{{ route('delete') }}" onSubmit="return deleteSubmit()">
         @csrf
         <input type="hidden" name="id" value="{{ $blog->id}}">
             <div class="form-group">
@@ -17,7 +17,7 @@
                     class="form-control"
                     value="{{ $blog->title }}"
                     type="text"
-                >
+                 readonly>
                 @if ($errors->has('title'))
                     <div class="text-danger">
                         {{ $errors->first('title') }}
@@ -28,7 +28,7 @@
                 <label for="content">
                     本文
                 </label>
-                <textarea
+                <textarea readonly
                     id="content"
                     name="content"
                     class="form-control"
@@ -44,16 +44,16 @@
                 <a class="btn btn-secondary" href="{{ route('blogs') }}">
                     キャンセル
                 </a>
-                <button type="submit" class="btn btn-primary">
-                    更新する
+                <button type="submit" class="btn btn-primary" >
+                    削除する
                 </button>
             </div>
         </form>
     </div>
 </div>
 <script>
-function checkSubmit(){
-if(window.confirm('更新してよろしいですか？')){
+function deleteSubmit(){
+if(window.confirm('削除してよろしいですか？')){
     return true;
 } else {
     return false;

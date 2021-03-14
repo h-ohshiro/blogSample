@@ -25,12 +25,13 @@ class BlogController extends Controller
         }
         return view('blog.detail',['blog' => $blog]);
     }
+    // ブログ投稿内容を表示する
     public function showCreate(){
         return view('blog.form');
 
     }
     // ブログを新規作成する
-    public function exestore(BlogRequest $request){
+    public function exeStore(BlogRequest $request){
         $input = $request -> all();
 
         \DB::beginTransaction();
@@ -56,6 +57,31 @@ class BlogController extends Controller
         }
         return view('blog.edit',['blog' => $blog]);
     }
+    // ブログの削除画面を表示する
+    public function checkDelete($id)
+    {
+        $blog = Blog::find($id);
+        if(is_null($blog)){
+            \Session::flash('err_msg','データがありません。');
+            return redirect(route('blogs'));
+        }
+        return view('blog.delete',['blog' => $blog]);
+    }
+    // ブログを削除する
+    public function exeDelete(BlogRequest $request)
+    {
+        if(empty($request)){
+            \Session::flash('err_msg','データがありません。');
+            return redirect(route('blogs'));
+        }
+        try {
+            Blog::destroy($request->id);
+        } catch (\Throwable $e) {
+            abort(500);
+        }
+        \Session::flash('err_msg','ブログを削除しました。');
+        return redirect(route('blogs'));
+    }
     // ブログを更新する
     public function exeUpdate(BlogRequest $request){
         // ブログのデータを受け取る
@@ -77,23 +103,6 @@ class BlogController extends Controller
             abort(500);
         }
         \Session::flash('err_msg','ブログを更新しました。');
-        return redirect(route('blogs'));
-    }
-    // ブログを削除する
-    public function exeDelete($id)
-    {
-        if(empty($id)){
-            \Session::flash('err_msg','データがありません。');
-            return redirect(route('blogs'));
-        }
-        try {
-            $blog = Blog::destroy($id);
-
-        } catch (\Throwable $e) {
-
-            abort(500);
-        }
-        \Session::flash('err_msg','ブログを削除しました。');
         return redirect(route('blogs'));
     }
 
